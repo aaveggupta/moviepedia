@@ -1,8 +1,12 @@
 import React from "react";
 
-const MainButton = ({ buttonTitle, onClick }) => {
+const MainButton = ({ buttonTitle, onClick, isLoading }) => {
   return (
-    <button className="bg-red-600 px-5 rounded-md text-xl" onClick={onClick}>
+    <button
+      disabled={isLoading}
+      className="bg-red-600 px-5 rounded-md text-xl"
+      onClick={onClick}
+    >
       {buttonTitle}
     </button>
   );

@@ -4,11 +4,16 @@ import MoviesContainer from "./components/MoviesContainer";
 
 function App() {
   const [moviesList, setMoviesList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <div>
-      <SearchHeader setMoviesList={setMoviesList} />
-      <MoviesContainer moviesList={moviesList} />
+    <div className="bg-black h-screen">
+      <SearchHeader
+        setMoviesList={setMoviesList}
+        setIsLoading={setIsLoading}
+        isLoading={isLoading}
+      />
+      <MoviesContainer moviesList={moviesList} isLoading={isLoading} />
     </div>
   );
 }
