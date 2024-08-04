@@ -5,16 +5,20 @@ import { getAllMovies } from "../helpers/api";
 
 const SearchHeader = ({ setMoviesList, setIsLoading, isLoading }) => {
   const [searchText, setSearchText] = useState("");
+  const [page, setPage] = useState(1);
 
-  const setSearchHandler = async (event) => {
+  console.log(page);
+
+  const setSearchHandler = async (event, pg) => {
     event.preventDefault();
     if (isLoading) return;
 
     setIsLoading(true);
-    const res = await getAllMovies(searchText);
+    const res = await getAllMovies(searchText, pg ?? 1);
     if (res?.Response === "True") {
       const movieInformation = res?.Search;
       setMoviesList(movieInformation);
+      setPage(pg ?? 1);
     } else {
       alert(res?.Error);
       setMoviesList([]);
@@ -44,6 +48,20 @@ const SearchHeader = ({ setMoviesList, setIsLoading, isLoading }) => {
           isLoading={isLoading}
         />
       </form>
+      <div className="flex gap-4">
+        <button
+          className="bg-white text-black"
+          onClick={(e) => setSearchHandler(e, page - 1)}
+        >
+          PREV
+        </button>
+        <button
+          className="bg-white text-black"
+          onClick={(e) => setSearchHandler(e, page + 1)}
+        >
+          NEXT
+        </button>
+      </div>
     </div>
   );
 };
