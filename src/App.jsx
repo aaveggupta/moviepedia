@@ -1,20 +1,25 @@
 import React, { useState } from "react";
-import SearchHeader from "./components/SearchHeader";
-import MoviesContainer from "./components/MoviesContainer";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Hello from "./components/Hello";
+import HomePage from "./components/HomePage";
+import MovieInfo from "./components/MovieInfo";
 
 function App() {
   const [moviesList, setMoviesList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <div className="bg-black h-screen">
-      <SearchHeader
-        setMoviesList={setMoviesList}
-        setIsLoading={setIsLoading}
-        isLoading={isLoading}
-      />
-      <MoviesContainer moviesList={moviesList} isLoading={isLoading} />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage setMoviesList={setMoviesList} moviesList={moviesList} />
+          }
+        />
+        <Route path="/hello" element={<Hello />} />
+        <Route path="/movie-info" element={<MovieInfo />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -11,7 +11,7 @@ const SearchHeader = ({ setMoviesList, setIsLoading, isLoading }) => {
 
   const setSearchHandler = async (event, pg) => {
     event.preventDefault();
-    if (isLoading) return;
+    if (isLoading || pg === 0) return;
 
     setIsLoading(true);
     const res = await getAllMovies(searchText, pg ?? 1);
@@ -30,6 +30,7 @@ const SearchHeader = ({ setMoviesList, setIsLoading, isLoading }) => {
 
   return (
     <div className="w-full bg-black text-white h-[24rem] flex flex-col justify-center items-center gap-16">
+      <a href="/movie-info">click here</a>
       <h1 className="text-6xl font-semibold">
         Search movies, TV shows and more
       </h1>

@@ -1,19 +1,17 @@
-import React, { useState } from "react";
-import MovieInfo from "./MovieInfo";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { getMovieInformation } from "../helpers/api";
 import { getMovieTrailerId } from "../helpers/movieTrailer";
 
 const MovieCard = ({ posterImage, title }) => {
-  const [movieInfo, setMovieInfo] = useState(null);
-  const [trailerID, setTrailerId] = useState("");
+  const navigate = useNavigate();
 
   const getMovieInfo = async () => {
     const res = await getMovieInformation(title);
     const movieInformation = res;
-    setMovieInfo(movieInformation);
-
     const id = await getMovieTrailerId(title);
-    setTrailerId(id);
+    const url = `/movie-info?movieName=${movieInformation.Title}&movieCountry=${movieInformation.Country}&trailerId=${id}`;
+    navigate(url);
   };
 
   return (
@@ -29,19 +27,6 @@ const MovieCard = ({ posterImage, title }) => {
           className="w-[20rem] h-[24rem] object-fill"
         />
       </div>
-      {movieInfo && <MovieInfo movieInfo={movieInfo} />}
-      {trailerID && (
-        <div className="mt-4 w-full">
-          <iframe
-            width="560"
-            height="315"
-            src={`https://www.youtube.com/embed/${trailerID}?autoplay=1`}
-            title="YouTube video player"
-            allowFullScreen
-            autop
-          ></iframe>
-        </div>
-      )}
     </div>
   );
 };
